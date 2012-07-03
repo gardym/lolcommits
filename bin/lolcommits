@@ -2,9 +2,11 @@
 
 begin
   require 'lolcommits'
+  require 'lolcommits/dropbox'
 rescue LoadError
   require 'rubygems'
   require 'lolcommits'
+  require 'lolcommits/dropbox'
 end
 
 include Lolcommits
@@ -99,7 +101,7 @@ def do_capture
     puts "*** capturing in test mode"
     Lolcommits.capture(capture_delay, capture_device, true, Choice.choices[:msg], Choice.choices[:sha])
   else
-    Lolcommits.capture(capture_delay, capture_device)
+    Lolcommits.capture(capture_delay, capture_device) { |file| Lolcommits::Dropbox.upload(file) }
   end
 end
 

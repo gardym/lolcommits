@@ -176,5 +176,7 @@ module Lolcommits
     if is_test
       Launchy.open(File.join loldir, "#{commit_sha}.jpg")
     end
+
+    yield File.join(loldir, "#{commit_sha}.jpg") if block_given?
   end
 end
